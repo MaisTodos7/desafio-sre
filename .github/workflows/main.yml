@@ -51,11 +51,11 @@ jobs:
           git config user.email --global "$MAIL"
           git config pull.rebase false --global
           git fetch --all
-          #git merge -X theirs origin/master
-          #grep "image:" metabase/*.yaml | awk '{ print $2 }' | sed -i -e 's/build[0-9]*\-.*/'$IMAGE_TAG'/' metabase/*.yaml    
-          #git add .
-          #git commit -m "Update image tag. CI JOB ID='$IMAGE_TAG'" 
-          #git push --set-upstream origin master
+          git merge -X theirs origin/main
+          grep "image:" metabase/*.yaml | awk '{ print $2 }' | sed -i -e 's/build[0-9]*\-.*/'$IMAGE_TAG'/' metabase/*.yaml    
+          git add .
+          git commit -m "Update image tag. CI JOB ID='$IMAGE_TAG'" 
+          git push --set-upstream origin main
       - name: Log out of Amazon ECR
         if: always()
         run: docker logout ${{ steps.login-ecr.outputs.registry }}

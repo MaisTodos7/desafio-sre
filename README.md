@@ -1,7 +1,7 @@
 # desafio-sre
 GitHub repository created by Terraform
-
-1- criei minha conta no github https://github.com/MaisTodos7/desafio-sre/edit/main/
+```
+1- criei minha conta no github https://github.com/MaisTodos7/desafio-sre/edit/main/ 
 2- criei meu personal token e o adicionei no variables.tf na env github_token
 3- crei uma organização chamada: MaisTodos7
 4- provisionei um repositório através do Terraform
@@ -17,6 +17,7 @@ fiz peering entre as contas
 13- instalei o argocd no eks; conectei com repositório de infra para enxergar o manifesto: argocd/app/metabase/deployment.yaml
 14- fiz deploy da aplicação no ambiente, dentro da namespace metabase
 
-observação: fotos estão dentro da pasta evidências
+observação: fotos estão dentro da pasta evidências```
+
 
 

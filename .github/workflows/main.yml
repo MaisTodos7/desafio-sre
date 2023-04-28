@@ -38,6 +38,8 @@ jobs:
         run: |
           CI_COMMIT_SHORT_SHA=${GITHUB_SHA}
           IMAGE_TAG=build${GITHUB_RUN_NUMBER}-${GITHUB_SHA::7}
+          git clone https://github.com/metabase/metabase.git
+          cd metabase
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "Update Image version to ArgoCD"
@@ -50,7 +52,7 @@ jobs:
           git config pull.rebase false --global
           git fetch --all
           #git merge -X theirs origin/master
-          #grep "image:" mais-todos/*.yaml | awk '{ print $2 }' | sed -i -e 's/build[0-9]*\-.*/'$IMAGE_TAG'/' mais-todos/*.yaml    
+          #grep "image:" metabase/*.yaml | awk '{ print $2 }' | sed -i -e 's/build[0-9]*\-.*/'$IMAGE_TAG'/' metabase/*.yaml    
           #git add .
           #git commit -m "Update image tag. CI JOB ID='$IMAGE_TAG'" 
           #git push --set-upstream origin master

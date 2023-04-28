@@ -7,7 +7,7 @@ on:
 
 # Global Environments
 env:
-  ECR_REGISTRY: (ID-DA-SUA-CONTA).dkr.ecr.us-east-1.amazonaws.com
+  ECR_REGISTRY: AKIARCFAZTL2MEZNIPVX.dkr.ecr.us-east-1.amazonaws.com
   ECR_REPOSITORY: metabase
   IMAGE_TAG: build${GITHUB_RUN_NUMBER}-${GITHUB_SHA::7}
 

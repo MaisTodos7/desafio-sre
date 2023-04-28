@@ -1,0 +1,80 @@
+### eksctl create cluster --config-file=eksctl-cluster.yml
+
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: MaisTodos
+  region: us-east-1
+vpc:
+  id: "vpc-0b028386c69b9b5d9"
+  cidr: "10.100.0.0/16"
+  clusterEndpoints:
+    publicAccess: true
+    privateAccess: true
+  subnets:
+    private:
+      us-east-1a:
+          id: "subnet-0595412c0255a1519"
+          cidr: "10.100.128.0/20"
+      us-east-1b:
+          id: "subnet-0cd0a1dba71191a95"
+          cidr: "10.100.144.0/20"
+      us-east-1c:
+          id: "subnet-0567a39a8d0cd9fdf"
+          cidr: "10.100.160.0/20"
+          
+nodeGroups:
+  - name: NodePool-2vcpu-4gbram
+    privateNetworking: true
+    minSize: 1
+    maxSize: 2
+    desiredCapacity: 1
+    instanceType: t3.medium
+    availabilityZones: ["us-east-1a"]
+    volumeType: gp3
+    volumeSize: 40
+    tags:
+      k8s.io/cluster-autoscaler/MaisTodos: "owned"
+      k8s.io/cluster-autoscaler/enabled: "true"
+    ssh:
+      enableSsm: true
+    iam:
+      withAddonPolicies:
+        autoScaler: true   
+        imageBuilder: true
+        externalDNS: true
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AmazonRoute53FullAccess
+        - arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess
+
+  - name: NodePool-2vcpu-8gbram
+    privateNetworking: true
+    minSize: 1
+    maxSize: 2
+    desiredCapacity: 1
+    instanceType: t3.large
+    availabilityZones: ["us-east-1b"]
+    volumeType: gp3
+    volumeSize: 40
+    tags:
+      k8s.io/cluster-autoscaler/MaisTodos: "owned"
+      k8s.io/cluster-autoscaler/enabled: "true"
+    ssh:
+      enableSsm: true
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+        imageBuilder: true
+        externalDNS: true
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AmazonRoute53FullAccess
+        - arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess

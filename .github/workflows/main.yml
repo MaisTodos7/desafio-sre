@@ -41,7 +41,7 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "Update Image version to ArgoCD"
-          cd argocd/
+          cd argocd/app/metabase
           git checkout main
           USER=$(git log -1 --format="%an")
           MAIL=$(git log -1 --format="%ae")

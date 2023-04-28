@@ -18,9 +18,9 @@ spec:
       containers:
       - name: metabase
         image: 073351666420.dkr.ecr.us-east-1.amazonaws.com/metabase:build1-abc
-        envFrom:
+        envFrom: 
         - configMapRef:
-            name: metabase-config
+           name: metabase-config
         livenessProbe:
           httpGet:
             path: /

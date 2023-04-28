@@ -7,7 +7,7 @@ on:
 
 # Global Environments
 env:
-  ECR_REGISTRY: AKIARCFAZTL2MEZNIPVX.dkr.ecr.us-east-1.amazonaws.com
+  ECR_REGISTRY: 073351666420.dkr.ecr.us-east-1.amazonaws.com
   ECR_REPOSITORY: metabase
   IMAGE_TAG: build${GITHUB_RUN_NUMBER}-${GITHUB_SHA::7}
 
@@ -33,7 +33,7 @@ jobs:
       # Start the Magik. Image Build
       - name: Build, tag, and push image to Amazon ECR
         env:
-          ECR_REGISTRY: AKIARCFAZTL2MEZNIPVX.dkr.ecr.us-east-1.amazonaws.com
+          ECR_REGISTRY: 073351666420.dkr.ecr.us-east-1.amazonaws.com
           ECR_REPOSITORY: metabase
         run: |
           CI_COMMIT_SHORT_SHA=${GITHUB_SHA}
@@ -41,8 +41,7 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "Update Image version to ArgoCD"
-          git clone https://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@github.com/IronTrainers/k8s.git
-          cd k8s/argocd/app/cronjobs/
+          cd argocd/
           git checkout main
           USER=$(git log -1 --format="%an")
           MAIL=$(git log -1 --format="%ae")
@@ -50,12 +49,11 @@ jobs:
           git config user.email --global "$MAIL"
           git config pull.rebase false --global
           git fetch --all
-          git merge -X theirs origin/master
-          grep "image:" ampla-saude/*.yaml | awk '{ print $2 }' | sed -i -e 's/build[0-9]*\-.*/'$IMAGE_TAG'/' ampla-saude/*.yaml    
-          git add .
-          git commit -m "Update image tag. CI JOB ID='$IMAGE_TAG'" 
-          git push --set-upstream origin master
-      # Celera, Celera Jesus, Celera Nossa Sra
+          #git merge -X theirs origin/master
+          #grep "image:" mais-todos/*.yaml | awk '{ print $2 }' | sed -i -e 's/build[0-9]*\-.*/'$IMAGE_TAG'/' mais-todos/*.yaml    
+          #git add .
+          #git commit -m "Update image tag. CI JOB ID='$IMAGE_TAG'" 
+          #git push --set-upstream origin master
       - name: Log out of Amazon ECR
         if: always()
         run: docker logout ${{ steps.login-ecr.outputs.registry }}
